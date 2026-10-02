@@ -123,6 +123,16 @@ test-gh-actions:
 publish:
     uv build
     uv publish
+
+# Set the user as required reviewer for the PyPI environment
+set-pypi-review:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    repo=$(gh repo view --json nameWithOwner --jq .nameWithOwner)
+    user_id=$(gh api user --jq .id)
+    gh api -X PUT "repos/$repo/environments/pypi" --input - <<EOF
+    {"reviewers": [{"type": "User", "id": $user_id}], "prevent_self_review": false}
+    EOF
 {% endraw %}
 {%- if is_research_project %}
 {% raw %}
