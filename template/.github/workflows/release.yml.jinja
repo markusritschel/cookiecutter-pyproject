@@ -1,0 +1,52 @@
+name: Publish to TestPyPI and PyPI
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10.2.0
+      - run: uv build
+      - uses: actions/upload-artifact@v7
+        with:
+          name: dist
+          path: dist/
+
+  test-pypi:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+    environment:
+      name: testpypi
+      url: https://test.pypi.org/p/{{ project_slug }}
+    steps:
+      - uses: astral-sh/setup-uv@v10.2.0
+      - uses: actions/download-artifact@v8
+        with:
+          name: dist
+          path: dist/
+      - run: uv publish --publish-url https://test.pypi.org/legacy/
+
+  pypi:
+    needs: test-pypi
+    runs-on: ubuntu-latest
+    environment:
+      # Add yourself as a required reviewer on this environment to approve
+      # each PyPI upload by hand.
+      name: pypi
+      url: https://pypi.org/p/{{ project_slug }}
+    permissions:
+      id-token: write
+    steps:
+      - uses: astral-sh/setup-uv@v10.2.0
+      - uses: actions/download-artifact@v8
+        with:
+          name: dist
+          path: dist/
+      # Defaults to PyPI's upload endpoint (https://upload.pypi.org/legacy/).
+      - run: uv publish
