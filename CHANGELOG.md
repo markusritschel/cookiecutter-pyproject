@@ -25,6 +25,9 @@
   startup script every notebook is told to `%run` failed on its second line. The extension and its
   commented `%autonotify` companion were removed rather than adding the dependency, since nothing
   else used them
+- **Fixed:** `pyproject.toml` hardcoded `version = "0.1.0"` and ignored the `project_version`
+  answer, while `CHANGELOG.md`, `CITATION.cff` and `__version__` used it. Answering anything but
+  the default generated a project that disagreed with itself about its own version
 - Removed `mkdocstrings-python` from the Zensical `docs` group. It was installed but never
   configured, so it produced no API documentation while implying that it did
 
