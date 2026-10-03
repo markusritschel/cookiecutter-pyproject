@@ -34,9 +34,23 @@
   `importlib.metadata`, leaving `pyproject.toml` the single source of the version
 - Removed `mkdocstrings-python` from the Zensical `docs` group. It was installed but never
   configured, so it produced no API documentation while implying that it did
+- **Added:** `.github/workflows/release.yml`, which publishes to TestPyPI and then PyPI whenever a
+  GitHub release is published. It builds once and uploads the same files to both indexes, so what
+  reaches PyPI is exactly what passed TestPyPI, and authenticates via trusted publishing, so no
+  long-lived API token has to be stored as a repository secret
+- **Added:** `just set-pypi-review`, which uses `gh` to make the current user a required reviewer on
+  the `pypi` environment, turning the PyPI upload into a manual approval step. Self-review stays
+  allowed, since in a single-maintainer project the person who publishes the release is the only
+  possible reviewer
 
 ### Documentation
 
+- Replaced the "Automated Publishing" section of `docs/features/publish-package.md`, which told users
+  to write their own tag-triggered `publish.yml` around twine and a `PYPI_API_TOKEN` secret, with the
+  setup for the generated `release.yml`: registering trusted publishers on PyPI and TestPyPI,
+  `just set-pypi-review`, and releasing via `just tag` + `gh release create`. `release.yml` is also
+  covered in `docs/features/github-actions.md`, `set-pypi-review` in `docs/features/justfile.md`,
+  and the release flow in the generated `.claude/CLAUDE.md`
 - Rewrote `docs/features/documentation.md`, which described Sphinx as if it were the only option
   although `docs_engine` has offered three since 1.0.0. It now leads with a comparison table and a
   recommendation (Sphinx, as the only engine generating API docs from docstrings), followed by
