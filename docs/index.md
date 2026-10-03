@@ -54,7 +54,7 @@ This template comes ready with a collection of modern and useful tools for an ef
 - **[Documentation](features/documentation.md)**: Your pick of Sphinx, Zensical or MyST, with GitHub Pages deployment wired up for each
 - **[Package Conventions](features/package-conventions.md)**: Project-root path variables, a logging setup, and a `save()` helper that stamps the git commit into every output file
 - **[Command-Line Interface](features/cli.md)**: Optional CLI scaffolding with Typer, Click or docopt
-- **[Publishing](features/publish-package.md)**: PyPI publishing via `just publish` or automated GitHub Actions workflow
+- **[Publishing](features/publish-package.md)**: PyPI publishing via `just publish`, or automatically on each GitHub release (TestPyPI first, trusted publishing, optional manual approval)
 - **[Research Projects](features/research-projects.md)**: Optional data science structure: `data/`, `notebooks/`, `reports/`
 - **src layout**: Ensures tests always run against the installed package, not loose source files
 - **[DevContainer](features/development.md#devcontainer)**: VSCode dev container for a reproducible development environment

@@ -199,3 +199,9 @@ def test_research_directories_are_conditional(research_project, library_project)
     for relpath in ("data", "notebooks", "references", "reports", "scripts"):
         assert (research_project / relpath).is_dir()
         assert not (library_project / relpath).exists()
+
+
+def test_project_version_answer_sets_the_package_version(template_src, tmp_path):
+    """The release tooling reads the version from pyproject.toml only."""
+    proj = _generate(template_src, tmp_path / "proj", project_version="1.2.3")
+    assert 'version = "1.2.3"' in (proj / "pyproject.toml").read_text()

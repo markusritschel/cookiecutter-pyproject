@@ -51,6 +51,8 @@ Available recipes:
   pdb *ARGS        # Run all the tests, but on failure, drop into the debugger
   publish          # Publish to PyPI (manual alternative to GitHub Actions)
   qa               # Run all the formatting, linting, and testing commands
+  release          # Create a GitHub release for the current version, triggering the PyPI upload
+  set-pypi-review  # Set the user as required reviewer for the PyPI environment
   tag              # Tag the current version in git and put to github
   test *ARGS       # Run all the tests, but allow for arguments to be passed
   test-gh-actions  # Test github actions locally
@@ -64,6 +66,14 @@ For the exact commands, have a look at the justfile in the project directory.
     `clear-images`, `convert-images`, `crop-pdf`, `crop-png` and `figures` operate on
     `reports/figures/` and are therefore only generated for research projects. They shell out to
     ImageMagick, and `crop-pdf` additionally needs `pdfcrop` from TeX Live.
+
+!!! note "`release` and `set-pypi-review`"
+    `release` creates a GitHub release named after the version in `pyproject.toml`, which starts the
+    [release workflow](./publish-package.md#automated-publishing). `set-pypi-review` adds you as a
+    required reviewer on the repository's `pypi` environment, so the release workflow waits for your
+    approval before uploading to PyPI; it only needs to be run once. Both need the
+    [GitHub CLI](https://cli.github.com/); `set-pypi-review` additionally needs admin rights on the
+    repository.
 
 
 ## Add your own tasks

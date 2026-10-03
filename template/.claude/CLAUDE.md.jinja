@@ -123,6 +123,10 @@ This startup script loads autoreload, sets pandas/xarray display options, applie
 
 `.pre-commit-config.yaml` runs `ruff check --fix` then `ruff format` on every commit, and updates `uv.lock` automatically when `pyproject.toml` changes.
 
+### Releasing
+
+`.github/workflows/release.yml` publishes to TestPyPI and then PyPI via trusted publishing (no API token) whenever a GitHub release is published; pushing a tag alone does not trigger it. Release by bumping `version` in `pyproject.toml`, pushing, then `just release` (runs `gh release create v<version>`); the workflow aborts before uploading if the tag does not match that version. `just set-pypi-review` makes the `pypi` environment wait for manual approval. `just publish` is the manual alternative, uploading straight to PyPI from the local machine.
+
 ### Template updates
 
 This project was generated from a [copier](https://copier.readthedocs.io) template. Run `copier update` to pull in upstream template updates; copier tracks the source version in `.copier-answers.yml`. Files matched by the template's `_skip_if_exists` list (docs, `.bib` files, `tests/`, `README.md`) are intentionally left untouched on update.

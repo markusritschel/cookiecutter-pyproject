@@ -5,6 +5,7 @@
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 """Provide global path variables, version information, and utility functions for the package."""
 
+from importlib.metadata import PackageNotFoundError, version
 from pathlib import Path
 {% if is_research_project -%}
 import sys
@@ -14,7 +15,10 @@ from dotenv import find_dotenv, load_dotenv
 from .core.utils import save as save
 from .core.utils import setup_logger as setup_logger
 
-__version__ = "{{ project_version }}"
+try:
+    __version__ = version("{{ project_slug }}")
+except PackageNotFoundError:  # running from a source tree that was never installed
+    __version__ = "unknown"
 
 
 # Make some of the basic directories globally available in your environment
