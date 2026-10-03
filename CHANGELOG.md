@@ -28,6 +28,10 @@
 - **Fixed:** `pyproject.toml` hardcoded `version = "0.1.0"` and ignored the `project_version`
   answer, while `CHANGELOG.md`, `CITATION.cff` and `__version__` used it. Answering anything but
   the default generated a project that disagreed with itself about its own version
+- **Fixed:** `__version__` was a literal written once at generation time, so it went stale on the
+  first `uv version --bump` — and nothing caught it, since `just tag`, `just release` and
+  `release.yml` read only `pyproject.toml`. It is now read from the installed package metadata via
+  `importlib.metadata`, leaving `pyproject.toml` the single source of the version
 - Removed `mkdocstrings-python` from the Zensical `docs` group. It was installed but never
   configured, so it produced no API documentation while implying that it did
 
