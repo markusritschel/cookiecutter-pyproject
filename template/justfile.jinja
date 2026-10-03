@@ -79,6 +79,10 @@ tag:
     git tag -a v{{VERSION}} -m "Creating version v{{VERSION}}"
     git push origin v{{VERSION}}
 
+# Create a GitHub release for the current version, triggering the PyPI upload
+release:
+    gh release create v{{VERSION}} --generate-notes
+
 # Remove all build, test, coverage and Python artifacts
 clean: clean-build clean-docs clean-pyc clean-test
 

@@ -42,13 +42,16 @@
   the `pypi` environment, turning the PyPI upload into a manual approval step. Self-review stays
   allowed, since in a single-maintainer project the person who publishes the release is the only
   possible reviewer
+- **Added:** `just release`, which runs `gh release create v<version> --generate-notes`, so a
+  release is one command instead of `just tag` plus a manual release. `gh` creates the tag if it is
+  missing; `just tag` stays for those who want an annotated tag
 
 ### Documentation
 
 - Replaced the "Automated Publishing" section of `docs/features/publish-package.md`, which told users
   to write their own tag-triggered `publish.yml` around twine and a `PYPI_API_TOKEN` secret, with the
   setup for the generated `release.yml`: registering trusted publishers on PyPI and TestPyPI,
-  `just set-pypi-review`, and releasing via `just tag` + `gh release create`. `release.yml` is also
+  `just set-pypi-review`, and releasing via `just release`. `release.yml` is also
   covered in `docs/features/github-actions.md`, `set-pypi-review` in `docs/features/justfile.md`,
   and the release flow in the generated `.claude/CLAUDE.md`
 - Rewrote `docs/features/documentation.md`, which described Sphinx as if it were the only option

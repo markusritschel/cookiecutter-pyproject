@@ -131,15 +131,17 @@ Required reviewers**.
 ### 3. Publish a release
 
 Bump the version in `pyproject.toml` and update the changelog (steps 1 and 2 of
-[Manual Publishing](#manual-publishing)), commit, then tag and release:
+[Manual Publishing](#manual-publishing)), commit and push, then release:
 
 ```bash
-just tag    # Creates and pushes tag v1.0.0, taken from pyproject.toml
-gh release create v1.0.0 --generate-notes
+just release    # gh release create v1.0.0 --generate-notes, version taken from pyproject.toml
 ```
 
-or create the release from the pushed tag in the GitHub UI (**Releases → Draft a new release**).
-Pushing the tag alone does **not** trigger the workflow — only publishing the release does.
+If the tag `v1.0.0` does not exist yet, `gh` creates it on the tip of the default branch on GitHub —
+so push first. To release from an annotated tag instead, run `just tag` beforehand; `just release`
+then uses the existing tag. You can also create the release in the GitHub UI (**Releases → Draft a
+new release**). Pushing a tag alone does **not** trigger the workflow — only publishing a release
+does.
 
 The workflow then uploads to TestPyPI, waits for your approval if you set up a reviewer, and
 uploads to PyPI. Follow its progress on the **Actions** tab.
@@ -179,7 +181,7 @@ my-cli = "my_package.cli:main"     # CLI entry point
 ## See Also
 
 - [GitHub Actions](./github-actions.md) - CI/CD workflows
-- [Task Automation](./justfile.md) - `just tag`, `just build` and `just set-pypi-review`
+- [Task Automation](./justfile.md) - `just release`, `just tag`, `just build` and `just set-pypi-review`
 
 ## Further Reading
 

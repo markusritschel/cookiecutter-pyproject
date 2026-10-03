@@ -39,7 +39,8 @@ Runs only on pushes to `main` when documentation-related files change (`docs/**`
 
 ### `release.yml` — Publishing
 
-Runs when you publish a GitHub release. It builds the package once, uploads it to TestPyPI, and —
+Runs when you publish a GitHub release (`just release`). It builds the package once, uploads it
+to TestPyPI, and —
 only if that succeeded — uploads the same files to PyPI. Both uploads use trusted publishing, so no
 API token secret is needed, but each index must be told to trust the workflow first. The `pypi`
 job runs in the `pypi` environment, which `just set-pypi-review` turns into a manual approval gate.
