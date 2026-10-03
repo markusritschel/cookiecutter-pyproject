@@ -143,8 +143,10 @@ then uses the existing tag. You can also create the release in the GitHub UI (**
 new release**). Pushing a tag alone does **not** trigger the workflow — only publishing a release
 does.
 
-The workflow then uploads to TestPyPI, waits for your approval if you set up a reviewer, and
-uploads to PyPI. Follow its progress on the **Actions** tab.
+The workflow first checks that the release tag equals `v` + the `version` in `pyproject.toml` and
+stops before uploading anything if they differ — for example when the version bump was not pushed.
+It then uploads to TestPyPI, waits for your approval if you set up a reviewer, and uploads to PyPI.
+Follow its progress on the **Actions** tab.
 
 !!! tip "A failed release needs a new version number"
     If the PyPI job fails after the TestPyPI upload succeeded, re-running the whole workflow fails

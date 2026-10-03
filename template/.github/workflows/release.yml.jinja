@@ -10,6 +10,14 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - uses: astral-sh/setup-uv@v10.2.0
+      # Fail before anything is uploaded if the release tag and pyproject.toml disagree.
+      - name: Check that the release tag matches the package version
+        run: |
+          version=$(uv version --short)
+          if [ "$GITHUB_REF_NAME" != "v$version" ]; then
+            echo "::error::Release tag $GITHUB_REF_NAME does not match version v$version in pyproject.toml"
+            exit 1
+          fi
       - run: uv build
       - uses: actions/upload-artifact@v7
         with:

@@ -42,6 +42,10 @@
   the `pypi` environment, turning the PyPI upload into a manual approval step. Self-review stays
   allowed, since in a single-maintainer project the person who publishes the release is the only
   possible reviewer
+- **Added:** `release.yml` now aborts before any upload if the release tag is not `v` + the
+  `version` in `pyproject.toml`. Without it, a release whose version bump was forgotten or not pushed
+  re-uploaded the previous version and failed only at TestPyPI with a duplicate-file error — or, on
+  a first release, published under the wrong version
 - **Added:** `just release`, which runs `gh release create v<version> --generate-notes`, so a
   release is one command instead of `just tag` plus a manual release. `gh` creates the tag if it is
   missing; `just tag` stays for those who want an annotated tag

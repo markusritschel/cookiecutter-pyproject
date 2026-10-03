@@ -39,8 +39,8 @@ Runs only on pushes to `main` when documentation-related files change (`docs/**`
 
 ### `release.yml` — Publishing
 
-Runs when you publish a GitHub release (`just release`). It builds the package once, uploads it
-to TestPyPI, and —
+Runs when you publish a GitHub release (`just release`). It checks that the release tag matches the
+version in `pyproject.toml`, builds the package once, uploads it to TestPyPI, and —
 only if that succeeded — uploads the same files to PyPI. Both uploads use trusted publishing, so no
 API token secret is needed, but each index must be told to trust the workflow first. The `pypi`
 job runs in the `pypi` environment, which `just set-pypi-review` turns into a manual approval gate.
@@ -77,6 +77,8 @@ Pull requests show status checks:
 **Release stuck on "Waiting"** – The `pypi` job has a required reviewer. Open the run and click **Review deployments**.
 
 **Trusted publishing failed (`invalid-publisher`)** – The publisher registered on PyPI/TestPyPI does not match the run; check owner, repository, workflow name (`release.yml`) and environment name (`pypi` / `testpypi`).
+
+**Release tag does not match version** – The tag (e.g. `v1.2.0`) must equal `v` + the `version` in `pyproject.toml` of the released commit. Delete the release and its tag, push the version bump, and release again.
 
 **Codecov upload skipped** – Add `CODECOV_TOKEN` to your repository secrets (**Settings → Secrets and variables → Actions**).
 
