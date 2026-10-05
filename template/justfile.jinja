@@ -12,8 +12,8 @@ format:
 
 # Run ruff linter without modifying files
 lint:
-    uv run --group dev ruff format --check .
     uv run --group dev ruff check .
+    uv run --group dev ruff format --check .
 
 # Run all the formatting, linting, and testing commands
 qa:
