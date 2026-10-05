@@ -7,8 +7,8 @@ default:
 
 # Run ruff formatter, modifying files and fixing lint errors
 format:
+    uv run --group dev ruff check --fix-only .
     uv run --group dev ruff format .
-    uv run --group dev ruff check --fix .
 
 # Run ruff linter without modifying files
 lint:
@@ -17,9 +17,9 @@ lint:
 
 # Run all the formatting, linting, and testing commands
 qa:
+    uv run --group dev ruff check --fix-only .
     uv run --group dev ruff format .
-    uv run --group dev ruff check --fix .
-    uv run --group dev ruff check --select I --fix .
+    uv run --group dev ruff check .
     uv run --group dev ty check .
     uv run --group dev pytest .
 

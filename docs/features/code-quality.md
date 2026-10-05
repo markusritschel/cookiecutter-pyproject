@@ -275,7 +275,7 @@ Execute all checks at once:
 just qa
 ```
 
-Runs in order: formatting → linting → import sorting → type checking → tests
+Runs in order: lint autofixes (incl. import sorting) → formatting → linting → type checking → tests
 
 !!! tip
     Use this before committing code.

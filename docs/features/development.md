@@ -85,7 +85,7 @@ def test_user_data():
 ### 3. Run Quality Checks
 
 ```bash
-just qa            # Format → Lint → Type check → Test
+just qa            # Autofix → Format → Lint → Type check → Test
 ```
 
 ### 4. Commit

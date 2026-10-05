@@ -113,7 +113,7 @@ uv automatically resolves dependency conflicts and creates a `uv.lock` file that
 The template's `justfile` tasks use `uv run` with specific dependency groups:
 
 - `just format` / `just lint` – Run `ruff` via the `dev` group
-- `just qa` – Runs format, lint, import sorting, type check and tests via the `dev` group
+- `just qa` – Runs lint autofixes, format, lint, type check and tests via the `dev` group
 - `just test` / `just pdb` / `just coverage` – Run `pytest` via the `test` group
 - `just docs` / `just docs-serve` – Build the documentation via the `docs` group
 
