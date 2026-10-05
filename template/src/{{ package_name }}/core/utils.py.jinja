@@ -72,18 +72,16 @@ def setup_logger(level=None, logfile=True, name="root"):
         if isinstance(logfile, bool):
             logfile = LOG_DIR / f"{caller_filename}_{os.getpid()}.log"
         elif isinstance(logfile, str):
-            logdir = Path(logfile).parents[0]
+            logfile = Path(logfile)
+            logdir = logfile.parents[0]
             if not logdir.exists():
                 raise OSError(f"Log directory {logdir} does not exist.")
-        logger.logfile = logfile.as_posix()
-        print(f"Log file: {logger.logfile}")
+        print(f"Log file: {logfile.as_posix()}")
 
         filehandler = logging.FileHandler(logfile)
         filehandler.setFormatter(formatter)
         filehandler.setLevel("DEBUG")
         logger.addHandler(filehandler)
-    else:
-        logger.logfile = None
 
     streamhandler = logging.StreamHandler()
     streamhandler.setFormatter(formatter)

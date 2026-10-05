@@ -1,0 +1,25 @@
+# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+# Author: {{ user_name }}
+# eMail:  {{ user_email }}
+# Date:   {% now 'local', '%Y-%m-%d' %}
+# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#
+import logging
+
+from {{ package_name }} import setup_logger
+
+
+def test_setup_logger_accepts_a_string_path(tmp_path):
+    logfile = tmp_path / "run.log"
+    root = logging.getLogger()
+    handlers_before = list(root.handlers)
+
+    logger = setup_logger(logfile=str(logfile))
+    try:
+        logger.info("hello")
+    finally:
+        for handler in set(root.handlers) - set(handlers_before):
+            handler.close()
+            root.removeHandler(handler)
+
+    assert "hello" in logfile.read_text()
